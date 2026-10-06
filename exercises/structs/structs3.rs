@@ -1,41 +1,26 @@
-// structs3.rs
-//
-// Structs contain data, but can also have logic. In this exercise we have
-// defined the Package struct and we want to test some logic attached to it.
-// Make the code compile and the tests pass!
-//
-// Execute `rustlings hint structs3` or use the `hint` watch subcommand for a
-// hint.
-
-// I AM NOT DONE
+#![deny(clippy::use_self)] // practice using the `Self` type
 
 #[derive(Debug)]
-struct Package {
-    sender_country: String,
-    recipient_country: String,
-    weight_in_grams: i32,
+struct Fireworks {
+    rockets: usize,
 }
 
-impl Package {
-    fn new(sender_country: String, recipient_country: String, weight_in_grams: i32) -> Package {
-        if weight_in_grams <= 0 {
-            panic!("Can not ship a weightless package.")
-        } else {
-            Package {
-                sender_country,
-                recipient_country,
-                weight_in_grams,
-            }
-        }
+impl Fireworks {
+    fn new() -> Self {
+        Self { rockets: 0 }
     }
 
-    fn is_international(&self) -> ??? {
-        // Something goes here...
+    fn add_rockets(&mut self, rockets: usize) {
+        self.rockets += rockets
     }
 
-    fn get_fees(&self, cents_per_gram: i32) -> ??? {
-        // Something goes here...
+    fn start(self) -> String {
+        "🚀".repeat(self.rockets)
     }
+}
+
+fn main() {
+    // You can optionally experiment here.
 }
 
 #[cfg(test)]
@@ -43,44 +28,18 @@ mod tests {
     use super::*;
 
     #[test]
-    #[should_panic]
-    fn fail_creating_weightless_package() {
-        let sender_country = String::from("Spain");
-        let recipient_country = String::from("Austria");
+    fn start_some_fireworks() {
+        let f = Fireworks::new();
+        assert_eq!(f.start(), "");
 
-        Package::new(sender_country, recipient_country, -2210);
-    }
+        let mut f = Fireworks::new();
+        f.add_rockets(3);
+        assert_eq!(f.start(), "🚀🚀🚀");
 
-    #[test]
-    fn create_international_package() {
-        let sender_country = String::from("Spain");
-        let recipient_country = String::from("Russia");
-
-        let package = Package::new(sender_country, recipient_country, 1200);
-
-        assert!(package.is_international());
-    }
-
-    #[test]
-    fn create_local_package() {
-        let sender_country = String::from("Canada");
-        let recipient_country = sender_country.clone();
-
-        let package = Package::new(sender_country, recipient_country, 1200);
-
-        assert!(!package.is_international());
-    }
-
-    #[test]
-    fn calculate_transport_fees() {
-        let sender_country = String::from("Spain");
-        let recipient_country = String::from("Spain");
-
-        let cents_per_gram = 3;
-
-        let package = Package::new(sender_country, recipient_country, 1500);
-
-        assert_eq!(package.get_fees(cents_per_gram), 4500);
-        assert_eq!(package.get_fees(cents_per_gram * 2), 9000);
+        let mut f = Fireworks::new();
+        f.add_rockets(7);
+        // We don't use method syntax in the last test to ensure the `start`
+        // function takes ownership of the fireworks.
+        assert_eq!(Fireworks::start(f), "🚀🚀🚀🚀🚀🚀🚀");
     }
 }
