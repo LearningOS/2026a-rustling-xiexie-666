@@ -4,9 +4,7 @@
 */
 
 #[derive(Debug)]
-pub struct Queue<T> {
-    elements: Vec<T>,
-}
+pub struct Queue<T> { elements: Vec<T> }
 
 impl<T> Queue<T> {
     pub fn new() -> Queue<T> { Queue { elements: Vec::new() } }
@@ -14,19 +12,14 @@ impl<T> Queue<T> {
     pub fn dequeue(&mut self) -> Result<T, &str> {
         if self.elements.is_empty() { Err("Queue is empty") } else { Ok(self.elements.remove(0)) }
     }
-    pub fn peek(&self) -> Result<&T, &str> {
-        self.elements.first().ok_or("Queue is empty")
-    }
+    pub fn peek(&self) -> Result<&T, &str> { self.elements.first().ok_or("Queue is empty") }
     pub fn size(&self) -> usize { self.elements.len() }
     pub fn is_empty(&self) -> bool { self.elements.is_empty() }
 }
 
 impl<T> Default for Queue<T> { fn default() -> Queue<T> { Queue::new() } }
 
-pub struct MyStack<T> {
-    q1: Queue<T>,
-    q2: Queue<T>,
-}
+pub struct MyStack<T> { q1: Queue<T>, q2: Queue<T> }
 
 impl<T> MyStack<T> {
     pub fn new() -> Self { Self { q1: Queue::new(), q2: Queue::new() } }
@@ -37,14 +30,13 @@ impl<T> MyStack<T> {
             let value = self.q1.dequeue().unwrap();
             self.q2.enqueue(value);
         }
-        let result = self.q1.dequeue();
+        let value = self.q1.dequeue().unwrap();
         std::mem::swap(&mut self.q1, &mut self.q2);
-        result
+        Ok(value)
     }
     pub fn is_empty(&self) -> bool { self.q1.is_empty() }
 }
 
-// Keep the original public spelling used by the exercise tests.
 pub type myStack<T> = MyStack<T>;
 
 #[cfg(test)]
