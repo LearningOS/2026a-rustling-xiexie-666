@@ -2,7 +2,7 @@
   "schema": 1,
   "courseId": 2084,
   "repository": "LearningOS/2026a-rustling-xiexie-666",
-  "commit": "7d3bcf8db8f5b657b75d726f860aa73cbbe9a96d",
+  "commit": "efc9bf2a1d009e42191786bb04b1f27f092b12d2",
   "score": 108,
   "totalScore": 110,
   "exercises": [
@@ -778,9 +778,9 @@
     }
   ],
   "student": "xiexie-666",
-  "runId": "37414866951",
+  "runId": "37416501537",
   "runAttempt": "1",
   "upload": {
-    "status": "accepted"
+    "status": "pending"
   }
 }
